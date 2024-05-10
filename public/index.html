@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="../dist/alpha.js"></script>
+    <!-- <script>
+        alpha.load = function () {
+            alpha.game.init(800, 500);
+            // alpha.input.mouseVisible = false;
+            // alpha.input.mouseLock = true;
+        }
+        alpha.update = function () {
+            // console.log("!")
+            alpha.graphics.color("green");
+            // alpha.graphics.arc(40,40,40,0,2*Math.PI,"fill");
+            // alpha.graphics.circle(80, 90, 20);
+            // alpha.graphics.ellipse(100, 200, 20, 60, "fill");
+            alpha.graphics.polygon(10, 100, 30, 20, 90, 32, 100, 100);
+            // alpha.graphics.point(50, 50);
+            // console.log(alpha.mousePosition);
+
+            // if (alpha.mouseReleased(1)) console.log(alpha.mouseReleased(1));
+
+            // if (alpha.input.keyHeld("a")) console.log(alpha.input.keyHeld("a"));
+            // if (alpha.keyPressed("a")) console.log(alpha.keyPressed("a"));
+            // if (alpha.keyReleased("a")) console.log(alpha.keyReleased("a"));
+            // alpha.game.fullscreen = false;
+        }
+    </script> -->
+
+    <script>
+
+        // let mySound = new Audio('test.mp3');
+        // mySound.play();
+        // console.log(mySound.paused);
+
+        let x = 500, y = 400, font;
+        let i, s;
+        let body, ground;
+        let map;
+        alpha.load = () => {
+            alpha.isDebugging = true;
+
+            alpha.init(1000, 800);
+            // alpha.init(3000, 2400);
+            
+            // font = alpha.graphics.addFont("./Quicksand.ttf", "sand");
+            font = new alpha.Font("./Quicksand.ttf");
+
+            // alpha.addImage("test.jpg", "a");
+            i = new alpha.Image("test.jpg");
+
+            // console.log(s);
+
+            // try {
+            s = new alpha.Audio('Test.m4a');
+            // } catch (error) {
+            //     throw error;
+            // }
+
+            // alpha.translate(1000, 1000);
+            // alpha.rotate(10 * Math.PI / 180);
+
+            body = new alpha.rigidBody("rect", [150, 100, 100, 100]);
+            new alpha.rigidBody("rect", [100, 300, 100, 100]);
+            
+            // for (let i = 0; i < 300; i++) {
+            //     new alpha.rigidBody("rect", [100, 300, 100, 100]);
+            // }
+
+            new alpha.rigidBody("rect", [500, 750, 1000, 100], { isStatic: true });
+            map = new alpha.tileMap("./tile/mountain.json");
+        };
+
+        alpha.update = function () {
+            // alpha.translate(100, 100);
+
+            // if (mySound.paused) {
+            //     mySound.play().catch(error => { });
+            // }
+
+            // if (!alpha.isPlaying('audio')) {
+            //     alpha.playSound('audio');
+            // }
+
+            // console.log(s.paused);
+            if (s.paused) {
+                s.play();
+            }
+
+            // alpha.circle(400, 400, 50);
+
+            alpha.polygon([10, 100, 30, 20, 90, 32, 100, 100]);
+
+            // alpha.rotate((15 * Math.PI) / 180);
+            // alpha.graphics.rotate((-45 * Math.PI) / 180);
+
+            // alpha.rect(2, 2, 100, 100);
+            // alpha.rect(x, y, 100, 100);
+
+            if (alpha.keyHeld("d")) x += 1;
+            if (alpha.keyHeld("a")) x -= 1;
+            if (alpha.keyHeld("w")) y -= 1;
+            if (alpha.keyHeld("s")) y += 1;
+
+            alpha.setFont(font);
+            alpha.setFont(font, { size: 100, style: "italic", weight: 100 });
+            alpha.print(alpha.getOS(), 100, 100);
+
+            alpha.drawImage(i, 300, 300);
+
+            // console.log(body.body);
+            alpha.translate(body.body.position.x, body.body.position.y)
+            alpha.rotate(body.body.angle);
+            alpha.rect(-50, -50, 100, 100);
+            alpha.rotate(0);
+            alpha.translate(0);
+
+            alpha.drawMap(map, 0, 0);
+            // alpha.drawMap(map, 0, 0, 1280, 960);
+            // alpha.drawMap(map, 0, 0, 1280);
+
+            // alpha.rect(400, 400, 100, 100);
+            // alpha.translate(400, 400);
+            // alpha.rect(0, 0, 100, 100);
+            // alpha.rotate(1);
+            // alpha.rect(0, 0, 100, 100);
+
+            console.log(alpha.getFPS());
+        }
+    </script>
+</body>
+
+</html>
